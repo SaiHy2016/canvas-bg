@@ -1,11 +1,13 @@
 function Canvas() {
-    let ctx=null;
+    let ctx=null,
+        cs=[];
     const PI=Math.PI;
     //初始化函数
     this.init=(obj={
             el:document.getElementsByTagName('canvas')[0],
             width:document.body.clientWidth,
-            height:document.body.clientHeight
+            height:document.body.clientHeight,
+            offset:10
         })=>{
         let w=obj.el.width=obj.width
         let h=obj.el.height=obj.height
@@ -31,6 +33,21 @@ function Canvas() {
         this.r=~~r
 
     }
+    Circle.prototype.draw=function () {
+        ctx.fillStyle = randomColor()
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.r,0,2*PI)
+        ctx.fill()
+    }
+    Circle.prototype.move=function () {
+        this.x++
+        this.y++
+    }
+    Circle.prototype.swerve=function () {
+
+    }
+
+
     function randomColor() {
         return  '#' +
             (function(color){
@@ -38,13 +55,9 @@ function Canvas() {
                 && (color.length == 6) ?  color : arguments.callee(color)
             })('')
     }
-    Circle.prototype.draw=function () {
-        ctx.fillStyle = randomColor()
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.r,0,2*PI)
-        ctx.fill()
+
+    function randomR(r,offset) {
+        return ~~(r+Math.random()*offset);
     }
-
-
 
 }
